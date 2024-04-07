@@ -1,8 +1,18 @@
 import { useEffect, useRef, useState } from "react"
+import { Socket, io } from "socket.io-client";
+
+const serverURL = "http://localhost:8000";
 
 export const Landing = () => {
     let localStream;
     const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const socket = io(serverURL);
+        socket.on("connect", async () => {
+            console.log(`Connected with socket ID ${socket.id}`);
+        })
+    }, [])
 
     let captureCamera = async () => {
     //    localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:false})
